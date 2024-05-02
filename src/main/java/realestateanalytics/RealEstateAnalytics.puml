@@ -1,0 +1,235 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+PropertyMapping o-- AbstractPropertyAnalysis
+PropertyMapping o-- MappedPropertyAnalysis
+MyLinkedList o-- AbstractPropertyAnalysis
+MyLinkedList o-- PropertyMapping
+
+class ProgramDriver{
+}
+
+class Property{
+mlsNumber: String
+shortAddress: String
+streetNumber: String
+streetName: String
+streetType: String
+town: String
+propertyType: PropertyType
+status: String
+listDate: String
+listPrice: double
+listPricePerSquare: double
+pendingDate: String
+closedDate: String
+closedPrice: double
+closedPricePerSquare: double
+daysOnMarket: double
+finishedSquareTotal: double
+lotSizeAcres: double
+yearBuilt: int
+numberBedrooms: int
+numberRooms: int
+garage: String
+listingMember: String
+listingOffice: String
+sellingMember: String
+sellingOffice: String
+waterview: String
+waterFrontage: String
+waterFrontageAmount: double
+waterfrontDeep: String
+waterfrontTidal: String
+fullTaxAmount: double
+hasBarn: String
+buyerZipCode: int
+getters((): for all
+setters(): for all
+}
+
+abstract class AbstractPropertyAnalysis implements IPropertyAnalysis {
+propertyMapping: PropertyMapping
+properties: MyLinkedList<Property>
+
+AbstractPropertyAnalysis(MyLinkedList<Property>)
+average(Function<Property, Double>): double
+totalSum(Function<Property, Double>): double
+findMax(Function<Property, Double>): double
+findMin(Function<Property, Double): double
+}
+
+class ArrayReadEntireCSV {
+readPropertiesFromCSV(): ArrayList<Property>
+}
+
+class ClosedPriceAnalysis extends AbstractPropertyAnalysis implements IPropertyAnalysis{
+ClosedPriceAnalysis(MyLinkedList<Property>)
+calculateAverage(): double
+calculateTotalSum(): double
+findMax(): double
+findMin(): double
+}
+
+class DaysOnMarketAnalysis extends AbstractPropertyAnalysis implements IPropertyAnalysis{
+DaysOnMarketAnalysis(MyLinkedList<Property>)
+calculateAverage(): double
+calculateTotalSum(): double
+findMax(): double
+findMin(): double
+}
+
+interface IPropertyAnalysis{
+calculateAverage(()
+calculateTotalSum(()
+findMax(()
+findMin(()
+}
+
+class ListingMemberAnalysis implements IPropertyAnalysis{
+properties: ArrayList<Property>
+memberName: String
+ListingMemberAnalysis(ArrayList<Property>, String()
+calculateAverage(): double
+calculateTotalSum(): double
+findMax(): double
+findMin(): double
+}
+
+class ListingOfficeAnalysis implements IPropertyAnalysis{
+properties: ArrayList<Property>
+officeName: String
+ListingOfficeAnalysis(ArrayList<Property>, String()
+calculateAverage: double
+calculateTotalSum: double
+findMax(): double
+findMin(): double
+}
+
+class ListPriceAnalysis extends AbstractPropertyAnalysis implements IPropertyAnalysis{
+ListPriceAnalysis(MyLinkedList<Property>)
+calculateAverage(): double
+calculateTotalSum(): double
+findMax(): double
+findMin(): double
+}
+
+class MappedPropertyAnalysis {
+propertyMapping: PropertyMapping
+MappedPropertyAnalysis(PropertyMapping)
+calculateAverage(MyLinkedList<Property>, Function<Property, Double>): double
+calculateAverageInRange(double, double, Function<Property, Double): double
+findMaxPricedProperty(MyLinkedList<Property>): Property
+}
+
+class PropertyMapping{
+propertiesByMLS: Map<String, Property>
+allProperties: MyLinkedList<Property>
+PropertyMapping()
+addProperty(Property): void
+getPropertyByMLS(String): Property
+filterByPriceRange(double, double, Function<Property, Double>: MyLinkedList<Property>
+setAllProperties(MyLinkedList<Property>): void
+getAllProperties(): MyLinkedList<Property>
+}
+
+enum PropertyStatus {
+statusCode: String
+PropertyStatus(String)
+fromCode(String): PropertyStatus
+}
+
+enum PropertyType{
+type: String
+PropertyType(String)
+fromCode(String): PropertyType
+}
+
+class ReadEntireCSV{
+readPropertiesFromCSV(): MyLinkedList<Property>
+}
+
+
+
+class MyLinkedList<T> implements IList{
+head: Node<T>
+MyLinkedList(()
+MyLinkedList(Node<T>)
+isEmpty(): boolean
+getHead(): Node<T>
+get(int): T
+add(T): void
+forEach((Consumer<T>): void
+remove(int): void
+removeIf(Predicate<T>): void
+countIf(Predicate<T>): int
+count(): int
+removeAll(): void
+filter(Predicate<T>): IList<T>
+}
+
+interface Node<T> {
+add(T): Node<T>
+add(int, T): Node<T>
+remove(int): Node<T>
+removeIf(Predicate<T>): Node<T>
+getData(): T
+getNext(() Node<T>
+forEach(Consumer<T>): void
+count(): int
+countHelp(int): int
+countIf(Predicate<T>): int
+map(Function<T, R>): <R> Node<R>
+filter(Predicate<T>): Node<T>
+}
+
+class ContentNode<T> implements Node {
+data: T
+next: Node<T>
+ContentNode(T, Node<T>)
+add(T): Node<T>
+add(int, T): Node<T>
+remove(int): Node<T>
+removeIf(Predicate<T>): Node<T>
+getData(): Node<T>
+forEach(Consumer<T>): void
+count(): int
+countHelp(int): int
+countIf(Predicate<T>): int
+map(Function<T,R>: <R> Node<R>
+filter(Predicate<T>): Node<T>
+}
+
+class EmptyNode<T> implements Node{
+add(T): Node<T>
+add(int, T): Node<T>
+remove(int): Node<T>
+removeIf(Predicate<T>): Node<T>
+getData(T): null
+getNext(): null
+forEach((Consumer<T>): null
+count(): 0
+countHelp(int): int
+countIf(Predicate<T>): int
+map(Function<T, R>): <R> Node<R>
+filter(Predicate<T>): Node<T>
+}
+
+interface IList<T>{
+get(int): T
+add(T): void
+add(int, T): void
+remove(int): void
+removeIf(Predicate<T>): void
+removeAll(): void
+count(): int
+countIf(Predicate<T>): int
+forEach(Consumer<T>): void
+map(Function<T, R>): <R> IList <R>
+filter(Predicate<T>): IList<T>
+}
+
+
+
+
+@enduml
